@@ -4,12 +4,12 @@ set -e
 
 if ! test -d "$INPUT_PROJECT_ROOTDIR"; then
   echo "::error::Project directory '$INPUT_PROJECT_ROOTDIR' doesn't exist"
-  exit
+  exit 1
 fi
 
 if  ! test -d "$INPUT_PROJECT_ROOTDIR/$INPUT_ENVIRONMENT_BASEDIR"; then
   echo "::error::Environment directory '$INPUT_ENVIRONMENT_BASEDIR' doesn't exist"
-  exit
+  exit 1
 fi
 
 if [ -z "$INPUT_PARAMS" ]; then
