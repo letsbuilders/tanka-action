@@ -1,0 +1,24 @@
+name: 'Tanka'
+description: 'Deploy to Kubernetes using Tanka'
+inputs:
+  environment_basedir:
+    description: 'Relative (from the project-rootdir) path to your environment directory'
+    required: false
+    default: 'environments/default'
+  project_rootdir:
+    description: 'Root directory of your Tanka project'
+    required: false
+    default: '.'
+  params:
+    description: |
+      Pass arguments to `tanka` that get mapped to `--ext-str` arguments.
+      `tag=latest env=prod` becomes `--ext-str tag=latest --ext-str env=prod`.
+      Use either of comma, space or semicolon as argument separator.
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${ inputs.project_rootdir }
+    - ${ inputs.environment_basedir }
+    - ${ inputs.params }
