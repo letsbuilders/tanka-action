@@ -39,6 +39,6 @@ jobs:
           cache-to: type=inline,mode=max
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:v1
-            ghcr.io/${{ github.repository }}:${{ steps.extract_ref_name.outputs.ref_name }}
             ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
+            ghcr.io/${{ github.repository }}:${{ steps.extract_ref_name.outputs.ref_name }}
+            ghcr.io/${{ github.repository }}:v1
