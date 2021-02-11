@@ -17,7 +17,7 @@ inputs:
     required: false
 runs:
   using: docker
-  image: Dockerfile
+  image: 'docker://ghcr.io/letsbuilders/tanka-action:v1'
   args:
     - ${ inputs.project_rootdir }
     - ${ inputs.environment_basedir }
