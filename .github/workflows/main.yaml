@@ -23,8 +23,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
-
+          password: ${{ secrets.PAT }}
       - name: Extract ref name
         run: echo "##[set-output name=ref_name;]$(echo ${GITHUB_REF##*/})"
         id: extract_ref_name
