@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+set -e
 
 cd "${INPUT_DIR:-.}"
 
@@ -28,6 +28,7 @@ if [ ! -z "$INPUT_EXTVARS" ]; then
   done
 fi
 
+eval_failure="no"
 
 find environments -type f -name 'main.jsonnet' -print0 | while IFS= read -r -d '' tk_env; do
   tk_env="$(dirname "$tk_env")"
@@ -50,5 +51,13 @@ find environments -type f -name 'main.jsonnet' -print0 | while IFS= read -r -d '
     echo "::debug::Succeeded evaluating $tk_env"
   else
     echo "::error file=$tk_env/main.jsonnet::Failed evaluating $tk_env"
+    eval_failure="yes"
   fi
 done
+
+if [[ $eval_failure == "yes" ]]; then
+  echo "::error::Tanka project evaluation failed"
+  exit 1
+else
+  echo "::debug::Tanka project evaluation succeeded"
+fi
