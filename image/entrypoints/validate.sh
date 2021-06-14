@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 set -e
+set -x
 
-cd "$INPUT_DIR"
+cd "${INPUT_DIR:-.}"
 
 echo "::debug::Install Jsonnet dependencies"
 jb install
@@ -29,7 +30,8 @@ if [ ! -z "$INPUT_EXTVARS" ]; then
 fi
 
 
-while read -r tk_env; do
+find environments -type f -name 'main.jsonnet' -print0 | while IFS= read -r -d '' tk_env; do
+  tk_env="$(dirname "$tk_env")"
   echo "::debug::Start evaluating $tk_env"
 
   if [[ -f "${tk_env}/chartfile.yaml" ]]; then
@@ -44,6 +46,4 @@ while read -r tk_env; do
   else
     echo "::error file=$tk_env/main.jsonnet::Failed evaluating $tk_env"
   fi
-done< <(find environments -type f -name main.jsonnet -print0 | xargs -0 -I {} dirname {})
-
-
+done
