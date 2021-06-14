@@ -35,6 +35,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf awscliv2.zip aws \
     && aws --version
 
-COPY entrypoint.sh /entrypoint.sh
+COPY entrypoints /entrypoints
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/tk"]

@@ -1,0 +1,18 @@
+name: 'Tanka'
+description: 'Validate tanka projects'
+inputs:
+  dir:
+    description: 'Root directory of your Tanka project'
+    required: false
+    default: '.'
+  tlas:
+    description: Top-level arguments to pass to `tk eval`
+    required: false
+  extVars:
+    description: External variables to pass to `tk eval`
+    required: false
+
+runs:
+  using: docker
+  image: 'docker://ghcr.io/letsbuilders/tanka-action:v2'
+  entrypoint: /entrypoints/validate.sh
