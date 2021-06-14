@@ -1,6 +1,5 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-set -e
 set -x
 
 cd "${INPUT_DIR:-.}"
