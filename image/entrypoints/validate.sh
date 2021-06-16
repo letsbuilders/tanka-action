@@ -24,7 +24,7 @@ if [ ! -z "$INPUT_EXTVARS" ]; then
 
 
   for PARAM in $INPUT_EXTVARS; do
-    EXTVARS="$EXTVARS -A $PARAM"
+    EXTVARS="$EXTVARS -V $PARAM"
   done
 fi
 
