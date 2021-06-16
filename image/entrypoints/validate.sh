@@ -30,7 +30,7 @@ fi
 
 eval_failure="no"
 
-find environments -type f -name 'main.jsonnet' -print0 | while IFS= read -r -d '' tk_env; do
+while IFS= read -r -d '' tk_env; do
   tk_env="$(dirname "$tk_env")"
   echo "::debug::Start evaluating $tk_env"
 
@@ -53,7 +53,7 @@ find environments -type f -name 'main.jsonnet' -print0 | while IFS= read -r -d '
     echo "::error file=$tk_env/main.jsonnet::Failed evaluating $tk_env"
     eval_failure="yes"
   fi
-done
+done < <(find environments -type f -name 'main.jsonnet' -print0)
 
 if [[ $eval_failure == "yes" ]]; then
   echo "::error::Tanka project evaluation failed"
