@@ -35,7 +35,7 @@ while IFS= read -r -d '' tk_env; do
   echo "::debug::Start evaluating $tk_env"
 
   # Stubbing JSON secrets encrypted with SOPS
-  find "$tk_env" -type f -iname 'enc*.json' | while read -r encfile; do
+  find -L "$tk_env" -type f -iname 'enc*.json' | while read -r encfile; do
     echo "::debug::stubbing ${encfile//stub.enc./}"
     sed 's|: ".*"|: ""|g' "$encfile" > "${encfile//enc./}"
   done
