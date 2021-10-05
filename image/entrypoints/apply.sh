@@ -31,3 +31,5 @@ jb install
 echo "::debug::Run Tanka"
 # shellcheck disable=SC2086
 tk apply "$INPUT_ENVIRONMENT_BASEDIR" --dangerous-auto-approve ${EXTERNAL_PARAMS_ARG}
+
+rm -Rf ./vendor

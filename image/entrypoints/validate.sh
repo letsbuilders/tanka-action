@@ -61,3 +61,5 @@ if [[ $eval_failure == "yes" ]]; then
 else
   echo "::debug::Tanka project evaluation succeeded"
 fi
+
+rm -Rf ./vendor
