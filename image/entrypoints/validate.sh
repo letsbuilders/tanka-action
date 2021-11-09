@@ -37,7 +37,7 @@ while IFS= read -r -d '' tk_env; do
   # Stubbing JSON secrets encrypted with SOPS
   find -L "$tk_env" -type f -iname 'enc*.json' | while read -r encfile; do
     echo "::debug::stubbing ${encfile//stub.enc./}"
-    sed 's|: ".*"|: ""|g' "$encfile" > "${encfile//enc./}"
+    cp "$encfile" "${encfile//enc./}"
   done
 
   if [[ -f "${tk_env}/chartfile.yaml" ]]; then
