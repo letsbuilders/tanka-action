@@ -28,6 +28,14 @@ RUN curl -Lo helm-linux-amd64.tar.gz https://get.helm.sh/helm-v3.5.2-linux-amd64
     && rm -rf linux-amd64 helm-linux-amd64.tar.gz \
     && helm version
 
+# kustomize
+RUN curl -Lo kustomize-linux-amd64.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.2/kustomize_v4.5.2_linux_amd64.tar.gz\
+   && tar zxvf kustomize-linux-amd64.tar.gz \
+   && mv kustomize /usr/local/bin/kustomize \
+   && chmod +x /usr/local/bin/kustomize \
+   && rm -rf kustomize-linux-amd64.tar.gz \
+   && kustomize version
+
 # aws-cli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"  \
     && unzip awscliv2.zip \

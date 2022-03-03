@@ -34,8 +34,8 @@ while IFS= read -r -d '' tk_env; do
   tk_env="$(dirname "$tk_env")"
   echo "::debug::Start evaluating $tk_env"
 
-  # Stubbing JSON secrets encrypted with SOPS
-  find -L "$tk_env" -type f -iname 'enc*.json' | while read -r encfile; do
+  # Stubbing secrets encrypted with SOPS
+  find -L "$tk_env" -type f -iname 'enc\.*' | while read -r encfile; do
     echo "::debug::stubbing ${encfile//stub.enc./}"
     cp "$encfile" "${encfile//enc./}"
   done
