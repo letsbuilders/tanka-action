@@ -3,7 +3,7 @@ FROM debian:buster-slim
 LABEL org.opencontainers.image.source="https://github.com/letsbuilders/tanka-action"
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -yq curl unzip
+RUN apt-get update && apt-get install -yq curl unzip git
 
 # jsonnet bunlder
 RUN curl -Lo /usr/local/bin/jb https://github.com/jsonnet-bundler/jsonnet-bundler/releases/download/v0.4.0/jb-linux-amd64 \
