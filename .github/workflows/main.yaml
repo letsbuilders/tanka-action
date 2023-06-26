@@ -11,33 +11,30 @@ on:
 jobs:
   build:
     name: Build and push Docker image
-    runs-on: ubuntu-20.04
-    env:
-      GITHUB_REGISTRY: /letsbuilders
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.PAT }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Extract ref name
         run: echo "##[set-output name=ref_name;]$(echo ${GITHUB_REF##*/})"
         id: extract_ref_name
 
-      - uses: docker/setup-buildx-action@v1
+      - uses: docker/setup-buildx-action@v2
 
       - name: Build and push to GCR
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: image
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:${{ steps.extract_ref_name.outputs.ref_name }}
-          cache-to: type=inline,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
-            ghcr.io/${{ github.repository }}:${{ steps.extract_ref_name.outputs.ref_name }}
             ghcr.io/${{ github.repository }}:v2
