@@ -47,7 +47,7 @@ while IFS= read -r -d '' tk_env; do
     popd
   fi
 
-  if tk eval "$tk_env" $TLAS $EXTVARS > /dev/null; then
+  if tk show --dangerous-allow-redirect "$tk_env" $TLAS $EXTVARS > /dev/null; then
     echo "::debug::Succeeded evaluating $tk_env"
   else
     echo "::error file=$tk_env/main.jsonnet::Failed evaluating $tk_env"
