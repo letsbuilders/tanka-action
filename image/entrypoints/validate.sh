@@ -43,6 +43,15 @@ while IFS= read -r -d '' tk_env; do
   if [[ -f "${tk_env}/chartfile.yaml" ]]; then
     echo "::debug::Installing helm charts"
     pushd "${tk_env}"
+    if [[ ! -z $AWS_REGION ]]; then
+      accountid=$(aws sts get-caller-identity | grep -oP '(?<="Account": ")[^"]+')
+      if grep -q public.ecr.aws chartfile.yaml; then
+        aws ecr-public get-login-password --region us-east-1 | helm registry login --username AWS --password-stdin public.ecr.aws
+      fi
+      if grep -q "$accountid.dkr.ecr.$AWS_REGION.amazonaws.com" chartfile.yaml; then
+        aws ecr get-login-password --region "$AWS_REGION" | helm registry login --username AWS --password-stdin "$accountid.dkr.ecr.$AWS_REGION.amazonaws.com"
+      fi
+    fi
     tk tool charts vendor
     popd
   fi
